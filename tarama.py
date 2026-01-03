@@ -1,66 +1,43 @@
 import socket
-import threading
-from queue import Queue
-import time
+import sys
 
-# Ayarlar
-target = input("Taramak istediğiniz IP adresini girin: ")
-queue = Queue()
-open_ports = []
+print("-" • 50)
+print("-" • 50)
+print(" Python Port Tarama Aracana Hos Geldiniz")
+print("-" • 50)
 
-def port_scan(port):
-    """Belirli bir portun açık olup olmadığını kontrol eder."""
-    try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(1) # 1 saniye bekleme süresi
-        result = sock.connect_ex((target, port))
-        if result == 0:
-            open_ports.append(port)
-        sock.close()
-    except:
-        pass
+# Kullanacsdan hadef IP veya donain alna
+hedef - input("Tarama yapılacak IP veya Domain (örn: 127.0.0.1): )
+try:
+    # Eğer domain girildiyse IP*ye cevirir (örn: google-com -> 142.250...)
+    hedef Jp - socket.gethostbyname(hedef)
+except socket-galerror:
+    print(" \n[|] Hata: Host cözülemedi. Lütfen gecerl1 bir adres girin.") sys-exit()
+    # Kullanacadan port aralaga alma
+try:
+    baslangls_gort • Int(Input("Baslangıc V/u (örn: 1): ")
+    bitis_port • imt(input("Bitis Portu (örn: 1000): "))
+sys.exit()
 
-def fill_queue(port_list):
-    """Portları kuyruğa ekler."""
-    for port in port_list:
-        queue.put(port)
+    print(f"\n[ ] [hedef (p) taransyor... ")
+    print(f"[*] Baslangic: (baslangic port) | Bitis: (bitis_port)\n")
+try:
+    for port in range(baslangic port, bitis port • 1):
+    s - socket.socket(socket.AF_INET, socket.SOCK_STREAN)
+    s.settimeout(0.5) * Tarama hazz için süre (saniye)
+    
+    sonuc - s-connect_ex((hedef_ip, port))
+    
+    if sonuc -- 0:
+        print(f[+] Port (port): ACIK*)
+        
+    s.close()
+    
+except KeyboardInterrupt:
+    print("\o[1] Tarama kullanaca tarafından durduruldu. ")
+sys-exit()
+    except socket.error:
+    print("/n[1] Sunucuya bağlamlamada. ")
 
-def worker():
-    """Kuyruktan port alıp tarama fonksiyonunu çağırır."""
-    while not queue.empty():
-        port = queue.get()
-        port_scan(port)
-
-# 0 ile 65535 arasındaki tüm portları kapsar
-port_list = range(1, 65536)
-fill_queue(port_list)
-
-print(f"\n{target} üzerindeki 65535 port taranıyor. Lütfen bekleyin...\n")
-start_time = time.time()
-
-# 100 ile 500 arasında thread (iş parçacığı) sayısı belirlenebilir. 
-# Çok yüksek sayı sistemi yorabilir.
-thread_list = []
-for t in range(200):
-    thread = threading.Thread(target=worker)
-    thread_list.append(thread)
-
-for thread in thread_list:
-    thread.start()
-
-for thread in thread_list:
-    thread.join()
-
-end_time = time.time()
-
-# Sonuçları Göster
-print("-" * 30)
-if open_ports:
-    print(f"Açık Portlar ({len(open_ports)} adet):")
-    for port in sorted(open_ports):
-        print(f"Port {port}: AÇIK")
-else:
-    print("Hiç açık port bulunamadı.")
-
-print(f"\nToplam Süre: {round(end_time - start_time, 2)} saniye")
-print("-" * 30)
+print(In--- Tarama Tamanlanda ...)
+If _name, -"maln'
