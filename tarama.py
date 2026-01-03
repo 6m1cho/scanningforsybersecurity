@@ -34,10 +34,13 @@ try:
     s.close()
     
 except KeyboardInterrupt:
-    print("\o[1] Tarama kullanaca tarafından durduruldu. ")
+    print("\o[!] Tarama kullanaca tarafından durduruldu. ")
 sys-exit()
     except socket.error:
-    print("/n[1] Sunucuya bağlamlamada. ")
+    print("/n[!] Sunucuya bağlamlamada. ")
 
-print(In--- Tarama Tamanlanda ...)
-If _name, -"maln'
+print("\n--- Tarama Tamamlandı ---")
+
+if _name_ == "_main_":
+    port_tarayicisi()
+
